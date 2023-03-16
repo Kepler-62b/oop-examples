@@ -99,12 +99,11 @@ class FileManipulator {
 
 }
 
-$file_m=new FileManipulator();
+// $file_m=new FileManipulator();
 
-$file_m->create("test.txt");
-$file_m->rename("New-test-1.txt");
-$file_m->rename("New-test-2.txt");
-$file_m->rename("New-test-3.txt");
+// $file_m->create("test.txt");
+// $file_m->rename("New-test-1.txt");
+// $file_m->rename("New-test-2.txt");
 
 
 
