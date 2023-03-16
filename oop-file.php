@@ -10,7 +10,7 @@ interface iFile {
   public function getSize(); // получить размер файла
 
   public function getText(); // получить текст файла
-  public function setText(string $text); // установить текст файла
+  public function setText(string $text); // создает файл и устанавливает весь текст файла
   public function appendText(string $text); // добавляет текст в конец файла
 
   public function copy($pathFile); // копирует файл(куда?)
@@ -19,7 +19,7 @@ interface iFile {
   public function replace($newPath); // перемещает файл
 }
   
-  class File implements iFile {
+class File implements iFile {
   public $file_name;
   public $file_path;
   public $file_discr;
@@ -56,10 +56,10 @@ interface iFile {
     fclose($this->file_discr);
   }
   public function copy($toCopyFileName){
-    copy($this->file_path, $toCopyFileName);
+    return copy($this->file_path, $toCopyFileName);
   }
   public function delete($fileName){
-    unlink($fileName);
+    return unlink($fileName);
   }
   public function rename($newName){
     rename($this->file_name, $newName);
@@ -73,5 +73,40 @@ interface iFile {
     unlink($this->file_name);
   }   
 }
+
+// $file=new File("test-file.txt");
+
+class FileManipulator {
+
+  public function create($filePath) {
+    $this->filePath=$filePath;
+    if(!file_exists($filePath)) {
+      fopen($filePath,"w+");
+    }
+    return $this;
+  }
+  public function setText(string $text){
+    file_put_contents($this->filePath, $text);
+  }
+  public function delete($filePath) {
+      return unlink($filePath);
+  }
+
+  public function rename($newPath) {
+    rename($this->filePath, $newPath); 
+    $this->filePath=$newPath;
+  }
+
+}
+
+$file_m=new FileManipulator();
+
+$file_m->create("test.txt");
+$file_m->rename("New-test-1.txt");
+$file_m->rename("New-test-2.txt");
+$file_m->rename("New-test-3.txt");
+
+
+
 
   
